@@ -33,15 +33,38 @@
     <section class="hero" aria-labelledby="title">
       <div class="eyebrow">Маленькое послание</div>
       <h1 id="title">Передай<br><em>привет.</em></h1>
-      <p id="message">Нажми кнопку — и привет вернётся к тебе. Иногда для хорошего настроения большего не нужно.</p>
-      <button type="button" id="hello">Передать привет ↗</button>
+      <p id="message" role="status" aria-live="polite">Нажми кнопку, чтобы отправить мне привет на почту.</p>
+      <form id="hello-form" action="https://formspree.io/f/mqpaynnz" method="POST">
+        <input type="hidden" name="message" value="Привет с сайта «Передай привет»!">
+        <input type="hidden" name="_subject" value="Привет с сайта">
+        <button type="submit" id="hello">Передать привет ↗</button>
+      </form>
     </section>
     <footer><span>Сделано для Ziebra</span><span class="muted">Открывай и делись приветом</span></footer>
   </main>
   <script>
-    document.getElementById('hello').addEventListener('click', function () {
-      document.getElementById('message').textContent = 'Привет передан! 👋 Эта страница работает прямо с твоего компьютера.';
-      this.textContent = 'Готово ✓';
+    const form = document.getElementById('hello-form');
+    const button = document.getElementById('hello');
+    const message = document.getElementById('message');
+    form.addEventListener('submit', async function (event) {
+      event.preventDefault();
+      button.disabled = true;
+      button.textContent = 'Отправляем…';
+      message.textContent = 'Отправляем привет…';
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' }
+        });
+        if (!response.ok) throw new Error('Formspree rejected the submission');
+        message.textContent = 'Привет принят! Проверь свою почту.';
+        button.textContent = 'Готово ✓';
+      } catch (error) {
+        message.textContent = 'Не получилось отправить. Попробуй ещё раз.';
+        button.textContent = 'Повторить ↗';
+        button.disabled = false;
+      }
     });
   </script>
 </body>
