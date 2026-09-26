@@ -18,8 +18,14 @@
     .eyebrow { color:var(--accent); font:600 13px system-ui,sans-serif; letter-spacing:.19em; text-transform:uppercase; }
     h1 { max-width:900px; margin:26px 0 34px; font-size:clamp(64px,11vw,148px); font-weight:400; letter-spacing:-.075em; line-height:.91; }
     h1 em { color:var(--accent); font-weight:400; }
-    p { max-width:490px; margin:0 0 36px; color:#c5c9c1; font:18px/1.6 system-ui,sans-serif; }
+    p { max-width:490px; margin:0 0 28px; color:#c5c9c1; font:18px/1.6 system-ui,sans-serif; }
+    form { max-width:490px; }
+    label { display:block; margin-bottom:10px; color:var(--ink); font:600 14px system-ui,sans-serif; }
+    textarea { display:block; width:100%; min-height:120px; margin-bottom:18px; padding:14px 16px; resize:vertical; border:1px solid #626c65; border-radius:0; background:#202724; color:var(--ink); font:16px/1.5 system-ui,sans-serif; }
+    textarea::placeholder { color:var(--muted); }
+    textarea:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
     button { min-height:48px; padding:12px 22px; border:1px solid var(--accent); border-radius:0; background:transparent; color:var(--accent); font:600 13px system-ui,sans-serif; cursor:pointer; transition:background .2s,color .2s; }
+    button:disabled { opacity:.65; cursor:default; }
     button:hover,button:focus-visible { background:var(--accent); color:var(--bg); }
     button:focus-visible { outline:2px solid var(--ink); outline-offset:3px; }
     footer { padding-top:24px; border-top:1px solid #3d4440; }
@@ -33,11 +39,12 @@
     <section class="hero" aria-labelledby="title">
       <div class="eyebrow">Маленькое послание</div>
       <h1 id="title">Передай<br><em>привет.</em></h1>
-      <p id="message" role="status" aria-live="polite">Нажми кнопку, чтобы отправить мне привет на почту.</p>
+      <p id="message" role="status" aria-live="polite">Напиши своё сообщение — я получу его по почте.</p>
       <form id="hello-form" action="https://formspree.io/f/mqpaynnz" method="POST">
-        <input type="hidden" name="message" value="Привет с сайта «Передай привет»!">
+        <label for="greeting">Твоё сообщение</label>
+        <textarea id="greeting" name="message" rows="4" maxlength="1000" placeholder="Напиши что-нибудь приятное…" required></textarea>
         <input type="hidden" name="_subject" value="Привет с сайта">
-        <button type="submit" id="hello">Передать привет ↗</button>
+        <button type="submit" id="hello">Отправить привет ↗</button>
       </form>
     </section>
     <footer><span>Сделано для Ziebra</span><span class="muted">Открывай и делись приветом</span></footer>
