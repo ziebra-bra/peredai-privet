@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#090909">
   <title>Передай привет</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&amp;family=JetBrains+Mono:wght@400&amp;family=Lora:ital,wght@1,400&amp;display=swap" rel="stylesheet">
   <style>
     :root {
       color-scheme: dark;
@@ -14,9 +17,9 @@
       --line: rgba(247, 249, 250, .18);
       --violet: #af50ff;
       --lavender: #e1bdff;
-      --sans: Arial, Helvetica, sans-serif;
-      --serif: Georgia, Cambria, "Times New Roman", serif;
-      --mono: "IBM Plex Mono", "Courier New", monospace;
+      --sans: "Whyte Inktrap", "Inter", "General Sans", ui-sans-serif, system-ui, sans-serif;
+      --serif: "GrandSlang", "Tiempos Headline", "Lora", serif;
+      --mono: "Whyte Inktrap Mono", "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace;
     }
     * { box-sizing: border-box; }
     html { min-width: 320px; }
@@ -25,7 +28,7 @@
     .masthead, .foot { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
     .masthead { min-height: 86px; border-bottom: 1px solid var(--line); }
     .brand { color: var(--paper); font-size: 15px; font-weight: 700; letter-spacing: -.04em; text-decoration: none; }
-    .brand span { font-family: var(--serif); font-style: italic; font-weight: 400; }
+    .brand span { font-family: var(--sans); font-weight: 500; }
     .kicker, .meta, .foot { font-family: var(--mono); font-size: 11px; font-weight: 400; letter-spacing: .17em; text-transform: uppercase; }
     .meta, .foot { color: var(--muted); }
     .content { flex: 1; display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(360px, .92fr); align-items: center; gap: clamp(48px, 7vw, 112px); padding: 80px 0 100px; }
