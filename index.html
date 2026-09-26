@@ -3,52 +3,101 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#171b1a">
+  <meta name="theme-color" content="#090909">
   <title>Передай привет</title>
   <style>
-    :root { color-scheme: dark; --bg:#171b1a; --ink:#f2eee4; --muted:#a5aca5; --accent:#ffb86a; }
+    :root {
+      color-scheme: dark;
+      --void: #090909;
+      --paper: #f7f9fa;
+      --muted: #a5a5a7;
+      --line: rgba(247, 249, 250, .18);
+      --violet: #af50ff;
+      --lavender: #e1bdff;
+      --sans: Arial, Helvetica, sans-serif;
+      --serif: Georgia, Cambria, "Times New Roman", serif;
+      --mono: "IBM Plex Mono", "Courier New", monospace;
+    }
     * { box-sizing: border-box; }
-    body { margin:0; min-height:100svh; background:var(--bg); color:var(--ink); font-family:Georgia, "Times New Roman", serif; }
-    main { max-width:1120px; min-height:100svh; margin:auto; padding:clamp(28px,5vw,72px); display:flex; flex-direction:column; justify-content:space-between; }
-    header, footer { display:flex; align-items:center; justify-content:space-between; gap:24px; font:600 12px/1.5 system-ui,sans-serif; letter-spacing:.15em; text-transform:uppercase; }
-    .mark { display:flex; align-items:center; gap:12px; }
-    .dot { width:10px; height:10px; border-radius:50%; background:var(--accent); box-shadow:0 0 20px #ffb86a80; }
-    .muted { color:var(--muted); }
-    .hero { padding:64px 0 84px; }
-    .eyebrow { color:var(--accent); font:600 13px system-ui,sans-serif; letter-spacing:.19em; text-transform:uppercase; }
-    h1 { max-width:900px; margin:26px 0 34px; font-size:clamp(64px,11vw,148px); font-weight:400; letter-spacing:-.075em; line-height:.91; }
-    h1 em { color:var(--accent); font-weight:400; }
-    p { max-width:490px; margin:0 0 28px; color:#c5c9c1; font:18px/1.6 system-ui,sans-serif; }
-    form { max-width:490px; }
-    label { display:block; margin-bottom:10px; color:var(--ink); font:600 14px system-ui,sans-serif; }
-    textarea { display:block; width:100%; min-height:120px; margin-bottom:18px; padding:14px 16px; resize:vertical; border:1px solid #626c65; border-radius:0; background:#202724; color:var(--ink); font:16px/1.5 system-ui,sans-serif; }
-    textarea::placeholder { color:var(--muted); }
-    textarea:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
-    button { min-height:48px; padding:12px 22px; border:1px solid var(--accent); border-radius:0; background:transparent; color:var(--accent); font:600 13px system-ui,sans-serif; cursor:pointer; transition:background .2s,color .2s; }
-    button:disabled { opacity:.65; cursor:default; }
-    button:hover,button:focus-visible { background:var(--accent); color:var(--bg); }
-    button:focus-visible { outline:2px solid var(--ink); outline-offset:3px; }
-    footer { padding-top:24px; border-top:1px solid #3d4440; }
-    @media (max-width:600px) { header,footer { align-items:flex-start; } .hero { padding:100px 0 70px; } h1 { font-size:clamp(62px,16vw,90px); } p { font-size:16px; } }
-    @media (prefers-reduced-motion:reduce) { button { transition:none; } }
+    html { min-width: 320px; }
+    body { margin: 0; min-height: 100svh; background: var(--void); color: var(--paper); font-family: var(--sans); }
+    .page { width: min(100% - 48px, 1200px); min-height: 100svh; margin: 0 auto; display: flex; flex-direction: column; }
+    .masthead, .foot { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+    .masthead { min-height: 86px; border-bottom: 1px solid var(--line); }
+    .brand { color: var(--paper); font-size: 15px; font-weight: 700; letter-spacing: -.04em; text-decoration: none; }
+    .brand span { font-family: var(--serif); font-style: italic; font-weight: 400; }
+    .kicker, .meta, .foot { font-family: var(--mono); font-size: 11px; font-weight: 400; letter-spacing: .17em; text-transform: uppercase; }
+    .meta, .foot { color: var(--muted); }
+    .content { flex: 1; display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(360px, .92fr); align-items: center; gap: clamp(48px, 7vw, 112px); padding: 80px 0 100px; }
+    .kicker { margin: 0 0 34px; color: var(--paper); }
+    .kicker::before { content: "+"; display: inline-block; margin-right: 14px; color: var(--lavender); }
+    h1 { margin: 0; font-size: clamp(76px, 9vw, 132px); font-weight: 300; letter-spacing: -.075em; line-height: .9; }
+    h1 span, h1 em { display: block; }
+    h1 em { margin: 6px 0 0 .03em; font-family: var(--serif); font-weight: 400; letter-spacing: -.065em; }
+    .intro { max-width: 370px; margin: 40px 0 0; color: var(--muted); font-size: 17px; font-weight: 300; line-height: 1.65; }
+    .note { position: relative; overflow: hidden; padding: clamp(26px, 3.3vw, 48px); border: 1px solid var(--line); border-radius: 19px; background: radial-gradient(circle at 100% 0%, rgba(175, 80, 255, .16), transparent 48%), rgba(247, 249, 250, .025); }
+    .note::before { content: ""; display: block; width: 36px; height: 2px; margin-bottom: 44px; background: var(--violet); }
+    .note-top { display: flex; justify-content: space-between; gap: 16px; margin-bottom: 38px; }
+    .note-top span { color: var(--paper); font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
+    .note-top span:last-child { color: var(--muted); }
+    label { display: block; margin-bottom: 13px; font-size: 20px; letter-spacing: -.02em; }
+    textarea { display: block; width: 100%; min-height: 180px; padding: 18px; resize: vertical; border: 1px solid rgba(247, 249, 250, .27); border-radius: 8px; background: rgba(9, 9, 9, .65); color: var(--paper); font: 16px/1.55 var(--sans); }
+    textarea::placeholder { color: #89898d; }
+    textarea:focus-visible { outline: 2px solid var(--lavender); outline-offset: 2px; }
+    .hint { margin: 13px 0 26px; color: var(--muted); font-family: var(--mono); font-size: 11px; letter-spacing: .03em; }
+    button { display: flex; align-items: center; justify-content: space-between; gap: 18px; width: 100%; min-height: 58px; padding: 14px 20px; border: 0; border-radius: 8px; background: var(--violet); color: var(--void); font: 700 16px var(--sans); cursor: pointer; transition: background .2s ease, transform .2s ease; }
+    button:not(:disabled):hover { background: var(--lavender); transform: translateY(-2px); }
+    button:focus-visible { outline: 2px solid var(--paper); outline-offset: 3px; }
+    button:disabled { opacity: .7; cursor: default; }
+    .foot { min-height: 88px; border-top: 1px solid var(--line); }
+    .foot strong { color: var(--paper); font-weight: 400; }
+    @media (max-width: 840px) {
+      .content { grid-template-columns: 1fr; gap: 56px; padding: 72px 0 88px; }
+      h1 { font-size: clamp(70px, 12vw, 112px); }
+      .intro { margin-top: 28px; }
+      .note { max-width: 640px; }
+    }
+    @media (max-width: 520px) {
+      .page { width: min(100% - 36px, 1200px); }
+      .masthead { min-height: 72px; }
+      .masthead .meta { display: none; }
+      .content { gap: 46px; padding: 64px 0 70px; }
+      .kicker { margin-bottom: 28px; font-size: 10px; }
+      h1 { font-size: clamp(66px, 17vw, 88px); }
+      .intro { font-size: 16px; }
+      .note { padding: 26px 22px; }
+      .note::before { margin-bottom: 32px; }
+      .note-top { margin-bottom: 32px; }
+      .foot { flex-wrap: wrap; justify-content: flex-start; gap: 6px 18px; padding: 24px 0; line-height: 1.5; }
+    }
+    @media (prefers-reduced-motion: reduce) { button { transition: none; } button:not(:disabled):hover { transform: none; } }
   </style>
 </head>
 <body>
-  <main>
-    <header><span class="mark"><span class="dot" aria-hidden="true"></span> Ziebra / Привет</span><span class="muted">Одна страница. Один файл.</span></header>
-    <section class="hero" aria-labelledby="title">
-      <div class="eyebrow">Маленькое послание</div>
-      <h1 id="title">Передай<br><em>привет.</em></h1>
-      <p id="message" role="status" aria-live="polite">Напиши своё сообщение — я получу его по почте.</p>
-      <form id="hello-form" action="https://formspree.io/f/mqpaynnz" method="POST">
-        <label for="greeting">Твоё сообщение</label>
-        <textarea id="greeting" name="message" rows="4" maxlength="1000" placeholder="Напиши что-нибудь приятное…" required></textarea>
-        <input type="hidden" name="_subject" value="Привет с сайта">
-        <button type="submit" id="hello">Отправить привет ↗</button>
-      </form>
-    </section>
-    <footer><span>Сделано для Ziebra</span><span class="muted">Открывай и делись приветом</span></footer>
-  </main>
+  <div class="page">
+    <header class="masthead">
+      <span class="brand">ZIEBRA<span>.</span></span>
+      <span class="meta">ПИСЬМО В ОДНО КАСАНИЕ / 001</span>
+    </header>
+    <main class="content">
+      <section aria-labelledby="title">
+        <div class="kicker">МАЛЕНЬКОЕ ПОСЛАНИЕ</div>
+        <h1 id="title"><span>Передай</span><em>привет.</em></h1>
+        <p class="intro" id="message" role="status" aria-live="polite">Напиши пару слов — сообщение придёт ко мне на почту.</p>
+      </section>
+      <section class="note" aria-label="Форма сообщения">
+        <div class="note-top"><span>01 / НАПИШИ</span><span>ДОСТАВКА НА ПОЧТУ</span></div>
+        <form id="hello-form" action="https://formspree.io/f/mqpaynnz" method="POST">
+          <label for="greeting">Твоё сообщение</label>
+          <textarea id="greeting" name="message" rows="5" maxlength="1000" placeholder="Напиши что-нибудь приятное…" required></textarea>
+          <input type="hidden" name="_subject" value="Привет с сайта">
+          <p class="hint">ДО 1000 СИМВОЛОВ · БЕЗ РЕГИСТРАЦИИ</p>
+          <button type="submit" id="hello"><span>Отправить привет</span><span aria-hidden="true">↗</span></button>
+        </form>
+      </section>
+    </main>
+    <footer class="foot"><strong>+ ПЕРЕДАЙ ПРИВЕТ</strong><span>СДЕЛАНО ДЛЯ ZIEBRA</span></footer>
+  </div>
   <script>
     const form = document.getElementById('hello-form');
     const button = document.getElementById('hello');
